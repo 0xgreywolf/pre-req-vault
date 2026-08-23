@@ -113,7 +113,7 @@ describe("pre-req-vault", () => {
     )[0];
 
     const tx = await program.methods
-      .withdraw(new BN(withdrawAmount))
+      .withdraw(new BN(withdrawAmount), "vshl01")
       .accountsStrict({
         user: user,
         vaultState: vaultStatePda,
@@ -150,9 +150,8 @@ describe("pre-req-vault", () => {
 
     expect(await provider.connection.getBalance(vaultPda)).to.equal(0);
 
-    const vaultStateInfo = await provider.connection.getAccountInfo(
-      vaultStatePda,
-    );
+    const vaultStateInfo =
+      await provider.connection.getAccountInfo(vaultStatePda);
     expect(vaultStateInfo).to.be.null;
 
     const finalUserBalance = await provider.connection.getBalance(user);
